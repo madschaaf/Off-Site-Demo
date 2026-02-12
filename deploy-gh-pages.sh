@@ -38,6 +38,10 @@ echo "📦 Saving build artifacts..."
 TMP_DIST="/tmp/gh-pages-deploy-$(date +%s)"
 cp -r dist "$TMP_DIST"
 
+# Clean up .vite directory (build artifacts)
+echo "🧹 Cleaning build artifacts..."
+rm -rf .vite
+
 # Create or switch to gh-pages branch
 echo "🌿 Setting up gh-pages branch..."
 if git show-ref --verify --quiet refs/heads/gh-pages; then
