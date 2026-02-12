@@ -25,7 +25,7 @@ fi
 
 # Build the React app (step-by-step only)
 echo "🔨 Building step-by-step guide..."
-vite build --config vite.config.deploy.ts deploy.html
+npx vite build --config vite.config.deploy.ts
 
 # Check if build was successful
 if [ ! -d "dist" ]; then

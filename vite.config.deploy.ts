@@ -17,9 +17,7 @@ export default defineConfig({
   base: '/Off-Site-Demo/',
   build: {
     rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, 'index.html'),
-      },
+      input: path.resolve(__dirname, 'deploy.html'),
     },
   },
 })
