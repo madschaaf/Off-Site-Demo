@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Deploy Step-by-Step Guide to GitHub Pages
-# This script deploys the standalone guide from gh-pages/ to the gh-pages branch
+# Deploy React App with Step-by-Step Guide to GitHub Pages
+# This script builds the React app and deploys it to the gh-pages branch
 
 set -e  # Exit on error
 
-echo "🚀 Deploying Step-by-Step Guide to GitHub Pages..."
+echo "🚀 Deploying React App to GitHub Pages..."
 echo ""
 
 # Save current branch
@@ -17,9 +17,19 @@ echo "📥 Ensuring main branch is up to date..."
 git checkout main
 git pull origin main
 
-# Check if gh-pages directory exists
-if [ ! -d "gh-pages" ]; then
-    echo "❌ Error: gh-pages directory not found!"
+# Install dependencies if needed
+if [ ! -d "node_modules" ]; then
+    echo "📦 Installing dependencies..."
+    npm install
+fi
+
+# Build the React app
+echo "🔨 Building React app..."
+npm run build
+
+# Check if build was successful
+if [ ! -d "dist" ]; then
+    echo "❌ Error: Build failed - dist directory not found!"
     exit 1
 fi
 
@@ -39,18 +49,18 @@ echo "🧹 Cleaning gh-pages branch..."
 git rm -rf . 2>/dev/null || true
 rm -rf * 2>/dev/null || true
 
-# Copy gh-pages content from main
-echo "📋 Copying step-by-step guide..."
-git checkout main -- gh-pages/
+# Copy built files from main
+echo "📋 Copying built React app..."
+git checkout main -- dist/
 
-# Move contents to root
-mv gh-pages/* .
-rmdir gh-pages
+# Move dist contents to root
+mv dist/* .
+rmdir dist
 
 # Commit and push
 echo "💾 Committing changes..."
 git add .
-git commit -m "Deploy step-by-step guide to GitHub Pages - $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+git commit -m "Deploy React app to GitHub Pages - $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
 
 echo "⬆️  Pushing to GitHub..."
 git push origin gh-pages
