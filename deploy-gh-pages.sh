@@ -62,6 +62,12 @@ rm -rf * .vite 2>/dev/null || true
 echo "📋 Copying built React app..."
 cp -r "$TMP_DIST"/* .
 
+# Rename deploy.html to index.html for GitHub Pages
+if [ -f "deploy.html" ]; then
+    mv deploy.html index.html
+    echo "   ✓ Renamed deploy.html to index.html"
+fi
+
 # Clean up temp directory
 rm -rf "$TMP_DIST"
 
