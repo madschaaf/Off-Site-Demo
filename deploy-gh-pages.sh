@@ -33,6 +33,11 @@ if [ ! -d "dist" ]; then
     exit 1
 fi
 
+# Copy dist to a temporary location
+echo "📦 Saving build artifacts..."
+TMP_DIST="/tmp/gh-pages-deploy-$(date +%s)"
+cp -r dist "$TMP_DIST"
+
 # Create or switch to gh-pages branch
 echo "🌿 Setting up gh-pages branch..."
 if git show-ref --verify --quiet refs/heads/gh-pages; then
@@ -47,15 +52,14 @@ fi
 # Remove all files except .git
 echo "🧹 Cleaning gh-pages branch..."
 git rm -rf . 2>/dev/null || true
-rm -rf * 2>/dev/null || true
+rm -rf * .vite 2>/dev/null || true
 
-# Copy built files from main
+# Copy built files from temporary location
 echo "📋 Copying built React app..."
-git checkout main -- dist/
+cp -r "$TMP_DIST"/* .
 
-# Move dist contents to root
-mv dist/* .
-rmdir dist
+# Clean up temp directory
+rm -rf "$TMP_DIST"
 
 # Commit and push
 echo "💾 Committing changes..."
@@ -63,7 +67,7 @@ git add .
 git commit -m "Deploy React app to GitHub Pages - $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
 
 echo "⬆️  Pushing to GitHub..."
-git push origin gh-pages
+git push origin gh-pages --force
 
 # Return to original branch
 echo "↩️  Returning to $CURRENT_BRANCH branch..."
