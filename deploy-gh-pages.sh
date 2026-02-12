@@ -23,9 +23,9 @@ if [ ! -d "node_modules" ]; then
     npm install
 fi
 
-# Build the React app
-echo "🔨 Building React app..."
-npm run build
+# Build the React app (step-by-step only)
+echo "🔨 Building step-by-step guide..."
+vite build --config vite.config.deploy.ts deploy.html
 
 # Check if build was successful
 if [ ! -d "dist" ]; then
