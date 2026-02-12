@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "aaravb.chrome-extension-developer-tools",
+    "esbenp.prettier-vscode",
+    "github.codespaces",
+    "github.copilot",
+    "github.copilot-chat",
+    "ms-vscode.remote-repositories",
+    "semanticworkbenchteam.mcp-server-vscode",
+    "tal7aouy.rainbow-bracket"
+  ]
+}
