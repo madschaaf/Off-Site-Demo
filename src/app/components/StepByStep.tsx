@@ -157,7 +157,7 @@ export function StepByStep({ onBack }: StepByStepProps) {
   return (
     <>
       {/* Sticky Container for Command Helpers */}
-      <div className="sticky top-0 z-50 flex flex-col bg-white shadow-md">
+      <div className="sticky top-16 z-40 flex flex-col bg-white shadow-md">
         <GitCommandHelper />
         <TerminalCommandHelper />
       </div>
