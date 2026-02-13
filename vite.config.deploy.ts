@@ -17,13 +17,11 @@ export default defineConfig({
   base: '/Off-Site-Demo/',
   build: {
     outDir: 'dist',
+    emptyOutDir: true,
     rollupOptions: {
-      input: path.resolve(__dirname, 'deploy.html'),
-      output: {
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
-      }
+      input: {
+        main: path.resolve(__dirname, 'deploy.html'),
+      },
     },
   },
 })
