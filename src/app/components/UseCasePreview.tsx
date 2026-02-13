@@ -26,6 +26,7 @@ export function UseCasePreview({
   onBackToLibrary,
 }: UseCasePreviewProps) {
   const navigate = useNavigate();
+  const [showAgenda, setShowAgenda] = useState(false);
   const [showTechnical, setShowTechnical] = useState(false);
   const [showData, setShowData] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
@@ -105,6 +106,42 @@ export function UseCasePreview({
         )}
         
         <div className="bg-white p-6" style={{ borderRadius: "16px" }}>
+          {/* Activity Agenda - Collapsible at Top */}
+          <div className="mb-6">
+            <button
+              onClick={() => setShowAgenda(!showAgenda)}
+              className="w-full flex items-center justify-between p-4 bg-transparent hover:bg-[--secondary] border-2 transition-colors"
+              style={{ 
+                borderRadius: showAgenda ? "12px 12px 0 0" : "12px",
+                borderColor: showAgenda ? "rgb(0, 111, 147)" : "var(--border)",
+                backgroundColor: showAgenda ? "rgba(0, 111, 147, 0.05)" : "transparent"
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <Award className="h-5 w-5" style={{ color: "rgb(0, 111, 147)" }} />
+                <span className="text-base font-[--font-weight-bold]" style={{ color: "rgb(0, 111, 147)" }}>
+                  Activity Agenda & Learning Objectives
+                </span>
+              </div>
+              <ChevronDown
+                className={`h-5 w-5 transition-transform ${showAgenda ? "rotate-180" : ""}`}
+                style={{ color: "rgb(0, 111, 147)" }}
+              />
+            </button>
+
+            {showAgenda && (
+              <div
+                className="p-4 border-2 border-t-0 bg-white"
+                style={{ 
+                  borderRadius: "0 0 12px 12px",
+                  borderColor: "rgb(0, 111, 147)"
+                }}
+              >
+                <ActivityObjectives />
+              </div>
+            )}
+          </div>
+
           {/* Header Section - De-emphasized */}
           <div style={{ marginBottom: "var(--space-4)" }}>
             <div className="mb-2">
@@ -159,9 +196,6 @@ export function UseCasePreview({
             borderRadius: "16px"
           }}
         >
-          {/* Activity Objectives - Displayed First */}
-          <ActivityObjectives />
-
           {/* What You'll Create & Hero Image - Combined */}
           <div 
             className="mb-4 p-4 border-2 bg-white"

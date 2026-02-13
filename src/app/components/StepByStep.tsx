@@ -13,6 +13,8 @@ import InstallVSCode from './Steps/InstallVSCode';
 import InstallNode from './Steps/InstallNode';
 import InstallGit from './Steps/InstallGit';
 import SetupGithubCopilot from './Steps/SetupGithubCopilot';
+import { GitCommandHelper } from './GitCommandHelper';
+import { TerminalCommandHelper } from './TerminalCommandHelper';
 
 interface StepByStepProps {
   onBack?: () => void;
@@ -153,139 +155,150 @@ export function StepByStep({ onBack }: StepByStepProps) {
   };
 
   return (
-    <div className="min-h-screen pt-16" style={{ backgroundColor: "rgba(249, 249, 249, 1)" }}>
-      <div className="max-w-7xl mx-auto p-8">
-        {/* Back Button */}
-        <button
-          onClick={() => navigate('/usecase')}
-          className="flex items-center gap-2 mb-6 px-4 py-2 hover:bg-white transition-all group"
-          style={{ 
-            borderRadius: "8px",
-            color: "rgb(0,111,147)",
-            fontWeight: "var(--font-weight-bold)",
-            fontSize: "14px"
-          }}
-        >
-          <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-          <span>Back to Use Case Details</span>
-        </button>
+    <>
+      {/* Git Command Helper - Sticky at top */}
+      <GitCommandHelper />
+      
+      {/* Terminal Command Helper - Right below Git helper */}
+      <TerminalCommandHelper />
+      
+      <div className="min-h-screen pt-16" style={{ backgroundColor: "rgba(249, 249, 249, 1)" }}>
+        <div className="max-w-7xl mx-auto p-8">
+          {/* Back Button */}
+          <button
+            onClick={() => navigate('/usecase')}
+            className="flex items-center gap-2 mb-6 px-4 py-2 hover:bg-white transition-all group"
+            style={{ 
+              borderRadius: "8px",
+              color: "rgb(0,111,147)",
+              fontWeight: "var(--font-weight-bold)",
+              fontSize: "14px"
+            }}
+          >
+            <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+            <span>Back to Use Case Details</span>
+          </button>
 
-        <div className="bg-white p-10" style={{ borderRadius: "16px" }}>
-          {/* Header Section */}
-          <div style={{ marginBottom: "var(--space-4)" }}>
-            <div className="mb-3">
-              {/* <LevelTag level={200} /> */}
-            </div>
-            <div className="flex items-start justify-between mb-4">
-              <h1 className="text-3xl font-bold leading-tight flex-1" style={{ color: "rgb(0,111,147)" }}>
-                {useCaseTitle}
-              </h1>
-              <button className="ml-4 p-2 hover:bg-slate-100 rounded-md transition-colors">
-                <Bookmark className="h-5 w-5 text-slate-400" />
-              </button>
-            </div>
-            
-            {/* Metadata */}
-            <div className="flex items-center justify-between text-xs text-slate-500 mb-3">
-              <p>Last updated: Feb 11, 2026</p>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1">
-                  <Eye className="h-3.5 w-3.5" />
-                  <span>128</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <ThumbsUp className="h-3.5 w-3.5" />
-                  <span>24</span>
-                </div>
+          <div className="bg-white p-10" style={{ borderRadius: "16px" }}>
+            {/* Header Section */}
+            <div style={{ marginBottom: "var(--space-4)" }}>
+              <div className="mb-3">
+                {/* <LevelTag level={200} /> */}
               </div>
-            </div>
-
-            {/* Total Time */}
-            <div className="flex items-center gap-2" style={{ color: "rgb(0,111,147)" }}>
-              <Clock className="h-4 w-4" />
-              <span className="font-bold">~{totalTime} min total</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Left Sidebar - Steps */}
-            <div className="lg:col-span-1">
-              <div className="bg-slate-50 border-2 border-slate-200 p-6" style={{ borderRadius: '16px' }}>
-                <h4 className="mb-4 font-bold">STEPS ({steps.length})</h4>
-                
-                <div className="space-y-3">
-                  {steps.map((step, index) => (
-                    <div
-                      key={index}
-                      className={`flex items-start gap-3 p-3 cursor-pointer transition-all ${
-                        currentStepIndex === index 
-                          ? 'bg-blue-100 border-2 border-blue-500' 
-                          : 'border-2 border-transparent hover:bg-slate-100'
-                      }`}
-                      style={{ borderRadius: '12px' }}
-                      onClick={() => setCurrentStepIndex(index)}
-                    >
-                      <div
-                        className="flex items-center justify-center w-6 h-6 rounded-full shrink-0 transition-all"
-                        style={{ backgroundColor: completedSteps.includes(index) ? 'rgb(34, 197, 94)' : 'rgb(0,111,147)' }}
-                      >
-                        {completedSteps.includes(index) ? (
-                          <Check className="h-4 w-4 text-white" />
-                        ) : (
-                          <span className="text-sm font-bold text-white">
-                            {index + 1}
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm mb-1 font-medium">{step.title}</p>
-                        <p className="text-xs text-slate-500">~{step.estimatedTime} min</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              <div className="flex items-start justify-between mb-4">
+                <h1 className="text-3xl font-bold leading-tight flex-1" style={{ color: "rgb(0,111,147)" }}>
+                  {useCaseTitle}
+                </h1>
+                <button className="ml-4 p-2 hover:bg-slate-100 rounded-md transition-colors">
+                  <Bookmark className="h-5 w-5 text-slate-400" />
+                </button>
               </div>
-            </div>
-
-            {/* Right Content Area - Step Details */}
-            <div className="lg:col-span-3">
-              <Card className="border-2 border-slate-200 shadow-md mb-8">
-                <CardContent className="p-8">
-                  {/* Step Header */}
-                  <div className="mb-6">
-                    <div className="flex items-start justify-between gap-3 mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center w-12 h-12 rounded-full font-bold text-white" style={{ backgroundColor: 'rgb(0,111,147)' }}>
-                          {currentStepIndex + 1}
-                        </div>
-                        <h3 className="text-2xl font-bold">{currentStep.title}</h3>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {currentStep.badges.map((badge, index) => (
-                        <Badge key={index} variant="outline">
-                          {badge}
-                        </Badge>
-                      ))}
-                    </div>
+              
+              {/* Metadata */}
+              <div className="flex items-center justify-between text-xs text-slate-500 mb-3">
+                <p>Last updated: Feb 11, 2026</p>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1">
+                    <Eye className="h-3.5 w-3.5" />
+                    <span>128</span>
                   </div>
+                  <div className="flex items-center gap-1">
+                    <ThumbsUp className="h-3.5 w-3.5" />
+                    <span>24</span>
+                  </div>
+                </div>
+              </div>
 
-                  <Separator className="my-6" />
+              {/* Total Time */}
+              <div className="flex items-center gap-2" style={{ color: "rgb(0,111,147)" }}>
+                <Clock className="h-4 w-4" />
+                <span className="font-bold">~{totalTime} min total</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              {/* Left Sidebar - Steps */}
+              <div className="lg:col-span-1">
+                <div className="bg-slate-50 border-2 border-slate-200 p-6" style={{ borderRadius: '16px' }}>
+                  <h4 className="mb-4 font-bold">STEPS ({steps.length})</h4>
+                  
+                  <div className="space-y-3">
+                    {steps.map((step, index) => (
+                      <div
+                        key={index}
+                        className={`flex items-start gap-3 p-3 cursor-pointer transition-all ${
+                          currentStepIndex === index 
+                            ? 'bg-blue-100 border-2 border-blue-500' 
+                            : 'border-2 border-transparent hover:bg-slate-100'
+                        }`}
+                        style={{ borderRadius: '12px' }}
+                        onClick={() => setCurrentStepIndex(index)}
+                      >
+                        <div
+                          className="flex items-center justify-center w-6 h-6 rounded-full shrink-0 transition-all"
+                          style={{ backgroundColor: completedSteps.includes(index) ? 'rgb(34, 197, 94)' : 'rgb(0,111,147)' }}
+                        >
+                          {completedSteps.includes(index) ? (
+                            <Check className="h-4 w-4 text-white" />
+                          ) : (
+                            <span className="text-sm font-bold text-white">
+                              {index + 1}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm mb-1 font-medium">{step.title}</p>
+                          <p className="text-xs text-slate-500">~{step.estimatedTime} min</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Content Area - Step Details */}
+              <div className="lg:col-span-3">
+                <Card className="border-2 border-slate-200 shadow-md mb-8">
+                  <CardContent className="p-8">
+                    {/* Step Header */}
+                    <div className="mb-6">
+                      <div className="flex items-start justify-between gap-3 mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center justify-center w-12 h-12 rounded-full font-bold text-white" style={{ backgroundColor: 'rgb(0,111,147)' }}>
+                            {currentStepIndex + 1}
+                          </div>
+                          <h3 className="text-2xl font-bold">{currentStep.title}</h3>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {currentStep.badges.map((badge, index) => (
+                          <Badge key={index} variant="outline">
+                            {badge}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Separator className="my-6" />
 
                   {/* Step Content */}
-                  <div className="mb-8 flex flex-col gap-6">
+                  <div className="mb-8">
                     {/* Render custom step component if available */}
-                    <div className="flex flex-col gap-4">
-                      {currentStep.componentRef === 'RequestAccess' && <RequestAccess />}
-                      {currentStep.componentRef === 'InstallVSCode' && <InstallVSCode />}
-                      {currentStep.componentRef === 'InstallNode' && <InstallNode />}
-                      {currentStep.componentRef === 'InstallGit' && <InstallGit />}
-                      {currentStep.componentRef === 'SetupGithubCopilot' && <SetupGithubCopilot />}
-                    </div>
-                    
-                    {/* Fallback to generic content if no component */}
-                    {!currentStep.componentRef && (
-                      <>
+                    {currentStep.componentRef ? (
+                      <div className="prose prose-slate max-w-none">
+                        <div className="bg-slate-50 rounded-xl p-6 md:p-8 border-2 border-slate-200">
+                          <div className="space-y-6">
+                            {currentStep.componentRef === 'RequestAccess' && <RequestAccess />}
+                            {currentStep.componentRef === 'InstallVSCode' && <InstallVSCode />}
+                            {currentStep.componentRef === 'InstallNode' && <InstallNode />}
+                            {currentStep.componentRef === 'InstallGit' && <InstallGit />}
+                            {currentStep.componentRef === 'SetupGithubCopilot' && <SetupGithubCopilot />}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      /* Fallback to generic content if no component */
+                      <div className="flex flex-col gap-6">
                         <h4 className="mb-4 font-bold">Overview</h4>
                         <p className="mb-6 text-slate-700">
                           {currentStep.content}
@@ -315,109 +328,110 @@ export function StepByStep({ onBack }: StepByStepProps) {
                             </div>
                           </div>
                         </div>
-                      </>
+                      </div>
                     )}
                   </div>
 
-                  <Separator className="my-6" />
+                    <Separator className="my-6" />
 
-                  {/* Action Buttons */}
-                  <div className="flex items-center gap-4">
-                    <Button
-                      className={completedSteps.includes(currentStepIndex) 
-                        ? "bg-green-600 hover:bg-green-700 text-white" 
-                        : "bg-blue-600 hover:bg-blue-700 text-white"
-                      }
-                      onClick={() => toggleStepComplete(currentStepIndex)}
-                    >
-                      {completedSteps.includes(currentStepIndex) ? (
-                        <>
-                          <Check className="h-4 w-4 mr-2" />
-                          Completed
-                        </>
-                      ) : (
-                        'Mark as Complete'
+                    {/* Action Buttons */}
+                    <div className="flex items-center gap-4">
+                      <Button
+                        className={completedSteps.includes(currentStepIndex) 
+                          ? "bg-green-600 hover:bg-green-700 text-white" 
+                          : "bg-blue-600 hover:bg-blue-700 text-white"
+                        }
+                        onClick={() => toggleStepComplete(currentStepIndex)}
+                      >
+                        {completedSteps.includes(currentStepIndex) ? (
+                          <>
+                            <Check className="h-4 w-4 mr-2" />
+                            Completed
+                          </>
+                        ) : (
+                          'Mark as Complete'
+                        )}
+                      </Button>
+                      {currentStepIndex > 0 && (
+                        <Button variant="outline" onClick={handlePrevious}>
+                          Previous Step
+                        </Button>
                       )}
-                    </Button>
-                    {currentStepIndex > 0 && (
-                      <Button variant="outline" onClick={handlePrevious}>
-                        Previous Step
-                      </Button>
-                    )}
-                    {currentStepIndex < steps.length - 1 && (
-                      <Button variant="outline" onClick={handleNext}>
-                        Next Step
-                        <ChevronRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    )}
-                  </div>
-
-                  <Separator className="my-6" />
-
-                  {/* Progress Indicator */}
-                  <div className="text-center">
-                    <p className="text-slate-600 mb-3">
-                      Progress: {completedSteps.length} of {steps.length} steps completed
-                    </p>
-                    <div className="w-full bg-slate-200 rounded-full h-2">
-                      <div 
-                        className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${(completedSteps.length / steps.length) * 100}%` }}
-                      />
+                      {currentStepIndex < steps.length - 1 && (
+                        <Button variant="outline" onClick={handleNext}>
+                          Next Step
+                          <ChevronRight className="h-4 w-4 ml-2" />
+                        </Button>
+                      )}
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
 
-              {/* Resources Section */}
-              <div>
-                <h3 className="text-lg font-bold mb-4" style={{ color: "rgb(0,111,147)" }}>
-                  Resources & References
-                </h3>
-                <div className="space-y-3">
-                  <div className="p-4 border-2 border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition-colors">
-                    <h4 className="font-bold mb-2">📋 Off-Site Activity Template (Figma)</h4>
-                    <p className="text-sm text-slate-600 mb-3">View the design template showing what you'll build during the activity.</p>
-                    <a 
-                      href="https://scout-quilt-85283092.figma.site" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-sm font-bold" 
-                      style={{ color: "rgb(0,111,147)" }}
-                    >
-                      Open Template →
-                    </a>
-                  </div>
+                    <Separator className="my-6" />
 
-                  <div className="p-4 border-2 border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition-colors">
-                    <h4 className="font-bold mb-2">🎨 Figma Design File</h4>
-                    <p className="text-sm text-slate-600 mb-3">Full Figma project file with all components and design specifications.</p>
-                    <a 
-                      href="https://www.figma.com/make/Y4Z2pT3sVmmNRetz1uWRfH/Off-Site-Template?t=uspuRFbyqrimOPdL-1" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-sm font-bold" 
-                      style={{ color: "rgb(0,111,147)" }}
-                    >
-                      View Figma File →
-                    </a>
-                  </div>
+                    {/* Progress Indicator */}
+                    <div className="text-center">
+                      <p className="text-slate-600 mb-3">
+                        Progress: {completedSteps.length} of {steps.length} steps completed
+                      </p>
+                      <div className="w-full bg-slate-200 rounded-full h-2">
+                        <div 
+                          className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${(completedSteps.length / steps.length) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-                  <div className="p-4 border-2 border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition-colors">
-                    <h4 className="font-bold mb-2">🔌 MCP Servers Documentation</h4>
-                    <p className="text-sm text-slate-600 mb-3">Learn about available MCP servers and how to use them during the activity. (Requires GitHub secure access)</p>
-                    <p className="text-xs text-slate-500 italic">Note: GitHub secure access required to view this resource</p>
-                  </div>
+                {/* Resources Section */}
+                <div>
+                  <h3 className="text-lg font-bold mb-4" style={{ color: "rgb(0,111,147)" }}>
+                    Resources & References
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="p-4 border-2 border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition-colors">
+                      <h4 className="font-bold mb-2">📋 Off-Site Activity Template (Figma)</h4>
+                      <p className="text-sm text-slate-600 mb-3">View the design template showing what you'll build during the activity.</p>
+                      <a 
+                        href="https://scout-quilt-85283092.figma.site" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-sm font-bold" 
+                        style={{ color: "rgb(0,111,147)" }}
+                      >
+                        Open Template →
+                      </a>
+                    </div>
 
-                  <div className="p-4 border-2 border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition-colors">
-                    <h4 className="font-bold mb-2">📚 Debugging Tips</h4>
-                    <p className="text-sm text-slate-600">
-                      <strong>• Use the VS Code terminal</strong> to run commands and see error messages<br/>
-                      <strong>• Check the browser console</strong> (F12) for JavaScript errors<br/>
-                      <strong>• Use debugger breakpoints</strong> to step through your code<br/>
-                      <strong>• Ask GitHub Copilot</strong> to help debug issues with your code<br/>
-                      <strong>• Check Git status</strong> with git status to understand repository state
-                    </p>
+                    <div className="p-4 border-2 border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition-colors">
+                      <h4 className="font-bold mb-2">🎨 Figma Design File</h4>
+                      <p className="text-sm text-slate-600 mb-3">Full Figma project file with all components and design specifications.</p>
+                      <a 
+                        href="https://www.figma.com/make/Y4Z2pT3sVmmNRetz1uWRfH/Off-Site-Template?t=uspuRFbyqrimOPdL-1" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-sm font-bold" 
+                        style={{ color: "rgb(0,111,147)" }}
+                      >
+                        View Figma File →
+                      </a>
+                    </div>
+
+                    <div className="p-4 border-2 border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition-colors">
+                      <h4 className="font-bold mb-2">🔌 MCP Servers Documentation</h4>
+                      <p className="text-sm text-slate-600 mb-3">Learn about available MCP servers and how to use them during the activity. (Requires GitHub secure access)</p>
+                      <p className="text-xs text-slate-500 italic">Note: GitHub secure access required to view this resource</p>
+                    </div>
+
+                    <div className="p-4 border-2 border-slate-200 rounded-lg bg-slate-50 hover:border-blue-300 transition-colors">
+                      <h4 className="font-bold mb-2">📚 Debugging Tips</h4>
+                      <p className="text-sm text-slate-600">
+                        <strong>• Use the VS Code terminal</strong> to run commands and see error messages<br/>
+                        <strong>• Check the browser console</strong> (F12) for JavaScript errors<br/>
+                        <strong>• Use debugger breakpoints</strong> to step through your code<br/>
+                        <strong>• Ask GitHub Copilot</strong> to help debug issues with your code<br/>
+                        <strong>• Check Git status</strong> with git status to understand repository state
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -425,6 +439,6 @@ export function StepByStep({ onBack }: StepByStepProps) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

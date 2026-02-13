@@ -414,6 +414,24 @@ export default function InstallGit() {
         </p>
       </div>
 
+      <div className="callout" style={{ background: '#e3f2fd', borderColor: '#90caf9', color: '#0d47a1', marginTop: 'var(--space-4)', borderRadius: '12px', padding: 'var(--space-3)' }}>
+        <strong>💡 Understanding Git Commands</strong>
+        <p style={{ margin: '8px 0 0', fontSize: '0.9rem' }}>
+          Notice how every Git command starts with <code style={{ background: 'rgba(0,0,0,0.1)', padding: '2px 6px', borderRadius: '4px' }}>git</code>? Think of it like mentioning someone on social media - just like you write <strong>@username</strong> then the message, with Git you always write <strong>git</strong> first, then the command you want to run.
+        </p>
+        <p style={{ margin: '8px 0 0', fontSize: '0.9rem' }}>
+          Examples:
+        </p>
+        <ul style={{ margin: '8px 0 0', paddingLeft: '20px', fontSize: '0.9rem' }}>
+          <li><code style={{ background: 'rgba(0,0,0,0.1)', padding: '2px 6px', borderRadius: '4px' }}>git status</code> - "Hey Git, show me the status"</li>
+          <li><code style={{ background: 'rgba(0,0,0,0.1)', padding: '2px 6px', borderRadius: '4px' }}>git commit</code> - "Hey Git, save my changes"</li>
+          <li><code style={{ background: 'rgba(0,0,0,0.1)', padding: '2px 6px', borderRadius: '4px' }}>git push</code> - "Hey Git, upload my work"</li>
+        </ul>
+        <p style={{ margin: '8px 0 0', fontSize: '0.9rem' }}>
+          The word "git" tells your computer that you're talking to the Git program, not trying to run some other command!
+        </p>
+      </div>
+
       <div className="callout" style={{ background: '#d4edda', borderColor: '#c3e6cb', color: '#155724', marginTop: 'var(--space-4)', borderRadius: '12px', padding: 'var(--space-3)' }}>
         <strong>✓ Git Installed Successfully!</strong>
         <p style={{ margin: '8px 0 0' }}>

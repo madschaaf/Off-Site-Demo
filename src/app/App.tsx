@@ -8,7 +8,7 @@ import { StepByStep } from './components/StepByStep';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Off-Site-Demo">
       <div className="size-full">
         <Navbar />
         <Routes>
