@@ -186,7 +186,7 @@ export function GitCommandHelper() {
 
   return (
     <div 
-      className="sticky top-16 z-40 mb-6"
+      className="w-full"
       style={{ 
         backgroundColor: "rgba(249, 249, 249, 1)",
         borderBottom: isOpen ? "1px solid var(--border)" : "none"

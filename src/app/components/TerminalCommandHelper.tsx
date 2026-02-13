@@ -122,13 +122,10 @@ export function TerminalCommandHelper() {
 
   return (
     <div 
-      className="sticky mb-6"
+      className="w-full"
       style={{ 
-        top: isOpen ? "16px" : "calc(16px + 140px)", // Push down further when closed to avoid overlapping git dropdown
-        zIndex: isOpen ? 50 : 41, // Always higher than Git commands (which is 40)
         backgroundColor: "rgba(249, 249, 249, 1)",
-        borderBottom: isOpen ? "1px solid var(--border)" : "none",
-        transition: "all 0.2s ease"
+        borderBottom: isOpen ? "1px solid var(--border)" : "none"
       }}
     >
       <div className="max-w-[1000px] mx-auto px-6">

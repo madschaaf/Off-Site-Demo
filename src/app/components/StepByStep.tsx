@@ -156,13 +156,13 @@ export function StepByStep({ onBack }: StepByStepProps) {
 
   return (
     <>
-      {/* Git Command Helper - Sticky at top */}
-      <GitCommandHelper />
+      {/* Sticky Container for Command Helpers */}
+      <div className="sticky top-0 z-50 flex flex-col bg-white shadow-md">
+        <GitCommandHelper />
+        <TerminalCommandHelper />
+      </div>
       
-      {/* Terminal Command Helper - Right below Git helper */}
-      <TerminalCommandHelper />
-      
-      <div className="min-h-screen pt-16" style={{ backgroundColor: "rgba(249, 249, 249, 1)" }}>
+      <div className="min-h-screen" style={{ backgroundColor: "rgba(249, 249, 249, 1)" }}>
         <div className="max-w-7xl mx-auto p-8">
           {/* Back Button */}
           <button
