@@ -287,7 +287,7 @@ export function StepByStep({ onBack }: StepByStepProps) {
                     {currentStep.componentRef ? (
                       <div className="prose prose-slate max-w-none">
                         <div className="bg-slate-50 rounded-xl p-8 md:p-10 border-2 border-slate-200">
-                          <div className="space-y-6 px-2">
+                          <div className="space-y-6 px-4 md:px-6">
                             {currentStep.componentRef === 'RequestAccess' && <RequestAccess />}
                             {currentStep.componentRef === 'InstallVSCode' && <InstallVSCode />}
                             {currentStep.componentRef === 'InstallNode' && <InstallNode />}
