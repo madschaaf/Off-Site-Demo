@@ -39,6 +39,24 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --color-red-500: #e53238;
+  --color-blue-500: #0064d2;
+  --color-yellow-500: #f5af02;
+  --color-green-500: #86b817;
+  --color-neutral-900: #111111;
+  --color-neutral-700: #333333;
+  --color-neutral-100: #f7f7f7;
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
 }
 
 .dark {
