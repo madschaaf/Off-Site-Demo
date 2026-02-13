@@ -124,7 +124,7 @@ export function TerminalCommandHelper() {
     <div 
       className="sticky mb-6"
       style={{ 
-        top: isOpen ? "16px" : "calc(16px + 72px)", // Adjust based on Git dropdown
+        top: isOpen ? "16px" : "calc(16px + 140px)", // Push down further when closed to avoid overlapping git dropdown
         zIndex: isOpen ? 50 : 41, // Always higher than Git commands (which is 40)
         backgroundColor: "rgba(249, 249, 249, 1)",
         borderBottom: isOpen ? "1px solid var(--border)" : "none",
