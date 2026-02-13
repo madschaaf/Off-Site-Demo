@@ -14,8 +14,8 @@ export default function RequestAccess() {
 
   return (
     <>
-      <h2>Request Secure Access</h2>
-      <p>Request access to the tools and systems you'll need for development at eBay. This includes GitHub, JIRA, Slack, and other essential services.</p>
+    
+      <p>Request access to the tools and systems you'll need for development at eBay. </p>
 
 
       <div className="callout" style={{ background: '#e3f2fd', borderColor: '#90caf9', color: '#0d47a1', marginTop: 'var(--space-4)', borderRadius: '12px', padding: 'var(--space-3)' }}>
@@ -29,9 +29,6 @@ export default function RequestAccess() {
       <ul>
         <li><strong>GitHub Enterprise</strong> - Access to eBay's code repositories</li>
         <li><strong>GitHub Copilot</strong> - AI pair programming assistant</li>
-        <li><strong>JIRA Access</strong> - Project management and issue tracking</li>
-        <li><strong>Slack Access</strong> - Team communication platform</li>
-        <li><strong>Glean Search</strong> - Enterprise search across eBay systems</li>
       </ul>
 
       <div className="callout" style={{ background: '#fff3cd', borderColor: '#ffeaa7', color: '#856404', marginTop: 'var(--space-3)', borderRadius: '12px', padding: 'var(--space-3)' }}>
@@ -70,7 +67,7 @@ export default function RequestAccess() {
       </ol>
 
       <h3 style={{ marginTop: 'var(--space-4)' }}>Step 3: Request GitHub Access</h3>
-      <p>Start by requesting access to GitHub Enterprise:</p>
+      <p>Start by requesting access to GitHub</p>
 
       <ol style={{ marginTop: 'var(--space-2)' }}>
         <li>
