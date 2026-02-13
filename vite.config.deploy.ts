@@ -16,8 +16,14 @@ export default defineConfig({
   assetsInclude: ['**/*.svg', '**/*.csv'],
   base: '/Off-Site-Demo/',
   build: {
+    outDir: 'dist',
     rollupOptions: {
       input: path.resolve(__dirname, 'deploy.html'),
+      output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
+      }
     },
   },
 })
