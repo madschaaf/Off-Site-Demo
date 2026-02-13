@@ -125,7 +125,7 @@ export function TerminalCommandHelper() {
       className="sticky mb-6"
       style={{ 
         top: isOpen ? "16px" : "calc(16px + 72px)", // Adjust based on Git dropdown
-        zIndex: isOpen ? 50 : 39, // Higher z-index when open to appear above Git commands
+        zIndex: isOpen ? 50 : 41, // Always higher than Git commands (which is 40)
         backgroundColor: "rgba(249, 249, 249, 1)",
         borderBottom: isOpen ? "1px solid var(--border)" : "none",
         transition: "all 0.2s ease"
